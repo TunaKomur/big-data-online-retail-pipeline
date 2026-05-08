@@ -1,0 +1,50 @@
+# === Veri ve Model Dosyaları ===
+data/raw/*.xlsx
+data/raw/*.csv
+data/raw/*.zip
+delta_lake/
+mlruns/
+*.parquet
+
+# === Python ===
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+*.egg-info/
+.pytest_cache/
+
+# === Jupyter ===
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# === Sistem ===
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+
+# === IDE ===
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# === Docker ===
+*.log
+
+# === Spark ===
+spark-warehouse/
+metastore_db/
+derby.log
+
+# === Kafka ===
+kafka-logs/
+
+# === Çevre Değişkenleri ===
+.env
+.env.local
