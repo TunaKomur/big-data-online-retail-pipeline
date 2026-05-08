@@ -1,0 +1,31 @@
+# Veri analizi
+pandas==2.2.2
+numpy==1.26.4
+openpyxl==3.1.5
+
+# Görselleştirme
+matplotlib==3.8.4
+seaborn==0.13.2
+plotly==5.22.0
+
+# Jupyter
+jupyterlab==4.2.1
+ipykernel==6.29.4
+notebook==7.2.0
+
+# Spark ve Delta Lake
+pyspark==3.5.1
+delta-spark==3.2.0
+
+# Kafka
+kafka-python==2.0.2
+
+# MLflow
+mlflow==2.13.0
+
+# Dashboard
+streamlit==1.35.0
+
+# Yardımcı
+python-dotenv==1.0.1
+tqdm==4.66.4
