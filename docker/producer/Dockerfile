@@ -3,17 +3,17 @@ FROM python:3.10-slim
 # Çalışma dizini
 WORKDIR /app
 
-# Sistem bağımlılıkları (excel okumak için minimum)
+# Sistem bağımlılıkları
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Python paketleri
-COPY docker/producer/requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY docker/producer/requirements.txt /tmp/requirements.txt
+RUN pip install --no-cache-dir -r /tmp/requirements.txt
 
-# Producer kodu sonradan volume mount edilecek
-# (geliştirme aşamasında değiştirip rebuild etmek istemiyoruz)
+# Producer kodu volume mount ile gelecek (geliştirme kolaylığı)
+# Container ayakta kalır, kod docker exec ile çalıştırılır
 
-# Default command - Faz 3'te güncellenecek
-CMD ["python", "-c", "print('Producer container ready. Run kafka_producer.py manually or via docker exec.')"]
+# Default command - container ayakta kalsın
+CMD ["tail", "-f", "/dev/null"]

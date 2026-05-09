@@ -144,6 +144,26 @@ docker compose down
 | Producer | `producer` | - | Kafka veri üreticisi |
 | MLflow | `mlflow` | 5001 | Deney takibi |
 
+## 📡 Kafka Producer (Faz 3)
+
+Producer container'ı, Excel'den okuyup Kafka'ya JSON mesajlar gönderir.
+
+### Çalıştırma
+
+```bash
+# Test (100 mesaj, yavaş)
+docker exec -e MAX_MESSAGES=100 -e PRODUCER_RATE_PER_SECOND=20 \
+  -it producer python /app/kafka_producer.py
+
+# Normal akış (10.000 mesaj)
+docker exec -e MAX_MESSAGES=10000 -it producer python /app/kafka_producer.py
+
+# Tam dataset (sınırsız)
+docker exec -it producer python /app/kafka_producer.py
+```
+
+Detaylar için: `producer/README.md`
+
 ## 📁 Proje Yapısı
 
 ```
@@ -192,7 +212,7 @@ big-data-online-retail-pipeline/
 - [x] Faz 0: Kurulum ve Repo
 - [x] Faz 1: Veri Keşfi
 - [x] Faz 2: Docker Altyapı
-- [ ] Faz 3: Kafka Producer
+- [x] Faz 3: Kafka Producer
 - [ ] Faz 4: Spark Streaming + Delta Lake
 - [ ] Faz 5: EDA
 - [ ] Faz 6: Feature Engineering

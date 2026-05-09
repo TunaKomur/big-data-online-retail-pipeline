@@ -101,7 +101,6 @@ services:
       PRODUCER_RATE_PER_SECOND: ${PRODUCER_RATE_PER_SECOND}
     networks:
       - bigdata-network
-    # Faz 3'e kadar boş duracak, sadece "ayakta" kalsın
     command: tail -f /dev/null
 
   # ============================================
