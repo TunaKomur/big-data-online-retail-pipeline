@@ -1,33 +1,42 @@
-# Big Data Pipeline: Online Retail II - Customer Lifetime Value Prediction
+# Big Data Pipeline: Online Retail II — Customer Lifetime Value Prediction
 
-End-to-end büyük veri projesi. Docker konteynerleri içinde Apache Kafka ile streaming veri üretimi, Apache Spark ile veri işleme, Delta Lake ile depolama, Spark MLlib ile makine öğrenmesi modelleri ve MLflow ile deney takibi.
+End-to-end büyük veri projesi. Apache Kafka ile streaming veri üretimi, Apache Spark ile veri işleme, Delta Lake ile depolama, Spark MLlib ile makine öğrenmesi modelleri ve MLflow ile deney takibi.
 
 ## 📌 Proje Hakkında
 
-Bu proje, Yıldız Teknik Üniversitesi (veya senin üniversitenin adı) Bilgisayar Mühendisliği bölümü "Büyük Veri Analizine Giriş" dersi 2025-2026 Bahar dönemi proje çalışmasıdır.
+Bu proje Bilgisayar Mühendisliği "Büyük Veri Analizine Giriş" dersi 2025-2026 Bahar dönemi proje çalışmasıdır.
 
 **Problem Tipi:** Regresyon  
 **Hedef:** Müşteri Yaşam Boyu Değeri (Customer Lifetime Value) tahmini  
-**Veri Seti:** [Online Retail II - UCI Repository](https://archive.ics.uci.edu/dataset/502/online+retail+ii)
+**Veri Seti:** [Online Retail II — UCI Repository](https://archive.ics.uci.edu/dataset/502/online+retail+ii)
 
 ## 🏗️ Mimari
-[Excel] → [Python Producer] → [Kafka] → [Spark Streaming]
-↓
-[Delta Lake: Bronze → Silver → Gold]
-↓
-[Spark MLlib + MLflow]
-↓
-[Dashboard]
+
+```
+[Excel Veri Seti]
+       ↓
+[Python Producer] (Docker) ──► [Kafka Topic] (Docker) ──► [Spark Streaming] (Host)
+                                                                    ↓
+                                          [Delta Lake: Bronze → Silver → Gold] (Host)
+                                                                    ↓
+                                                    [Spark MLlib + MLflow]
+                                                                    ↓
+                                                          [Streamlit Dashboard]
+```
+
+> **Not:** Apple Silicon (M1/M2/M3) üzerinde Spark, Docker amd64 emülasyonu nedeniyle kararsız çalışır. Bu projede Spark **host'ta (yerel sanal ortamda)** çalıştırılır — proje yönergesi "yerel Spark kurulumu da kabul edilir" dediği için bu yaklaşım hem kabul edilebilir hem de daha performanslıdır.
 
 ## 🛠️ Kullanılan Teknolojiler
 
-- **Konteynerizasyon:** Docker, Docker Compose
-- **Streaming:** Apache Kafka
-- **İşleme:** Apache Spark (PySpark) Structured Streaming
-- **Depolama:** Delta Lake (Bronze/Silver/Gold mimarisi)
-- **ML:** Spark MLlib
-- **Deney Takibi:** MLflow
-- **Dashboard:** Streamlit + Plotly
+| Katman | Teknoloji | Konum |
+|--------|-----------|-------|
+| Konteynerizasyon | Docker, Docker Compose | - |
+| Streaming | Apache Kafka (Confluent) | Docker |
+| İşleme | Apache Spark 3.5 (PySpark) | Host (sanal ortam) |
+| Depolama | Delta Lake 3.2 (Bronze/Silver/Gold) | Host |
+| ML | Spark MLlib | Host |
+| Deney Takibi | MLflow 2.13 | Docker |
+| Dashboard | Streamlit + Plotly | Host |
 
 ## 👥 Ekip
 
@@ -37,22 +46,136 @@ Bu proje, Yıldız Teknik Üniversitesi (veya senin üniversitenin adı) Bilgisa
 
 ## 🚀 Kurulum
 
-(Yapım aşamasında — Faz 2 sonunda detaylandırılacak)
+### Ön Gereksinimler
+- macOS (Apple Silicon) veya Linux
+- Docker Desktop (en az 8 GB RAM, 4 CPU verilmiş)
+- Python 3.10
+- Java 17 (Homebrew: `brew install openjdk@17`)
+- Git
+
+### Adımlar
+
+**1. Repoyu klonla:**
+```bash
+git clone https://github.com/KULLANICI_ADIN/big-data-online-retail-pipeline.git
+cd big-data-online-retail-pipeline
+```
+
+**2. Sanal ortam oluştur ve etkinleştir:**
+```bash
+python3.10 -m venv .venv
+source .venv/bin/activate
+```
+
+**3. Java 17'yi sanal ortama bağla** (sanal ortam aktive dosyasına ekle):
+```bash
+echo 'export JAVA_HOME=/opt/homebrew/opt/openjdk@17' >> .venv/bin/activate
+echo 'export PATH=$JAVA_HOME/bin:$PATH' >> .venv/bin/activate
+deactivate && source .venv/bin/activate
+```
+
+**4. Python paketlerini yükle:**
+```bash
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+**5. JAR dosyalarını indir** (Spark'ın Kafka ve Delta Lake ile iletişimi için):
+```bash
+./scripts/download_jars.sh
+```
+
+**6. Çevre değişkenlerini ayarla:**
+```bash
+cp .env.example .env
+```
+
+**7. Veri setini indir:**
+   - https://archive.ics.uci.edu/dataset/502/online+retail+ii adresinden ZIP indir
+   - `online_retail_II.xlsx` dosyasını `data/raw/` klasörüne koy
+
+**8. Docker servislerini başlat:**
+```bash
+docker compose up -d
+```
+
+İlk çalıştırmada container imajları indirilir (5-10 dk).
+
+**9. Kafka topic'ini oluştur:**
+```bash
+docker exec -it kafka kafka-topics \
+  --create \
+  --topic online-retail-transactions \
+  --bootstrap-server kafka:9092 \
+  --partitions 3 \
+  --replication-factor 1 \
+  --if-not-exists
+```
+
+**10. JupyterLab'i başlat (host'ta):**
+```bash
+jupyter lab --notebook-dir=. --no-browser
+```
+
+Terminal'de gösterilen URL'yi tarayıcıda aç.
+
+### 🌐 Erişim Linkleri
+
+- **Jupyter Lab:** http://localhost:8888
+- **Kafka UI:** http://localhost:8080
+- **MLflow:** http://localhost:5001
+- **Spark UI:** http://localhost:4040 (Spark çalışırken)
+
+### Servisleri Durdurma
+
+```bash
+# Jupyter: Ctrl+C
+# Docker: aşağıdaki komut
+docker compose down
+```
+
+## 🐳 Servis Mimarisi (Docker)
+
+| Servis | Container | Port | Görev |
+|--------|-----------|------|-------|
+| Zookeeper | `zookeeper` | 2181 | Kafka koordinasyonu |
+| Kafka | `kafka` | 9092 (iç), 9094 (host) | Mesaj kuyruğu |
+| Kafka UI | `kafka-ui` | 8080 | Web yönetim arayüzü |
+| Producer | `producer` | - | Kafka veri üreticisi |
+| MLflow | `mlflow` | 5001 | Deney takibi |
 
 ## 📁 Proje Yapısı
 
+```
 big-data-online-retail-pipeline/
-├── docker-compose.yml
-├── docker/                  # Servis Dockerfile'ları
-├── producer/                # Kafka producer kodu
-├── notebooks/               # Jupyter notebook'lar (EDA, Feature Eng., ML)
-├── spark_jobs/              # PySpark streaming/batch işleri
-├── ml/                      # ML eğitim ve değerlendirme scriptleri
-├── dashboard/               # Streamlit dashboard
-├── data/raw/                # Ham veri (gitignore'da)
-├── delta_lake/              # Delta tabloları (gitignore'da)
-├── mlruns/                  # MLflow çıktıları (gitignore'da)
-└── docs/                    # Teknik rapor ve görseller
+├── docker-compose.yml          # Servis orkestrasyon
+├── .env.example                # Çevre değişkeni şablonu
+├── requirements.txt            # Python bağımlılıkları
+│
+├── docker/                     # Servis Dockerfile'ları
+│   └── producer/
+│
+├── scripts/                    # Yardımcı script'ler
+│   └── download_jars.sh        # JAR indirme
+│
+├── src/                        # Yardımcı Python modülleri
+│   └── spark_session.py        # Spark session factory
+│
+├── jars/                       # Spark JAR'ları (gitignore)
+│
+├── notebooks/                  # Jupyter notebook'lar
+│   └── 00_data_exploration.ipynb
+│
+├── producer/                   # Kafka producer kodu
+├── spark_jobs/                 # PySpark streaming/batch işleri
+├── ml/                         # ML eğitim/değerlendirme
+├── dashboard/                  # Streamlit dashboard
+│
+├── data/raw/                   # Ham veri (gitignore)
+├── delta_lake/                 # Delta tabloları (gitignore)
+├── mlruns/                     # MLflow çıktıları (gitignore)
+└── docs/                       # Teknik rapor ve görseller
+```
 
 ## 📊 Veri Seti
 
@@ -67,8 +190,8 @@ big-data-online-retail-pipeline/
 ## 📈 Proje Aşamaları
 
 - [x] Faz 0: Kurulum ve Repo
-- [ ] Faz 1: Veri Keşfi
-- [ ] Faz 2: Docker Altyapı
+- [x] Faz 1: Veri Keşfi
+- [x] Faz 2: Docker Altyapı
 - [ ] Faz 3: Kafka Producer
 - [ ] Faz 4: Spark Streaming + Delta Lake
 - [ ] Faz 5: EDA

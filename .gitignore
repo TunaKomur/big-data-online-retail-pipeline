@@ -4,6 +4,8 @@ data/raw/*.csv
 data/raw/*.zip
 delta_lake/
 mlruns/
+mlflow-artifacts/
+jars/
 *.parquet
 
 # === Python ===
