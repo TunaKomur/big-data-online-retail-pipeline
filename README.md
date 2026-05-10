@@ -148,6 +148,38 @@ docker compose down
 
 Producer container'ı, Excel'den okuyup Kafka'ya JSON mesajlar gönderir.
 
+## 🌊 Spark Streaming + Delta Lake (Faz 4)
+
+Kafka'dan gelen veriyi okuyup **Bronze/Silver/Gold** Medallion mimarisiyle Delta Lake'e yazar.
+
+### Mimari
+
+```
+Kafka → Bronze (raw)    → Silver (clean)         → Gold (Faz 6)
+        ↓                 ↓
+        delta/bronze/     delta/silver/
+                          ├── transactions/
+                          └── cancellations/
+```
+
+### Notebook'lar
+
+| Notebook | Görev |
+|----------|-------|
+| `01_bronze_streaming.ipynb` | Kafka → Delta Bronze (streaming) |
+| `02_silver_transformation.ipynb` | Bronze → Silver (batch) |
+| `03_delta_inspection.ipynb` | Tabloları sorgulama |
+
+### Production Script'ler
+
+```bash
+# Bronze streaming (30 saniye çalışır)
+python spark_jobs/bronze_streaming.py --duration 30
+
+# Silver batch transformation
+python spark_jobs/silver_transformation.py
+```
+
 ### Çalıştırma
 
 ```bash
@@ -213,7 +245,7 @@ big-data-online-retail-pipeline/
 - [x] Faz 1: Veri Keşfi
 - [x] Faz 2: Docker Altyapı
 - [x] Faz 3: Kafka Producer
-- [ ] Faz 4: Spark Streaming + Delta Lake
+- [x] Faz 4: Spark Streaming + Delta Lake
 - [ ] Faz 5: EDA
 - [ ] Faz 6: Feature Engineering
 - [ ] Faz 7: ML Modelleri + MLflow
