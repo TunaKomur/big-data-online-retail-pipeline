@@ -196,6 +196,34 @@ docker exec -it producer python /app/kafka_producer.py
 
 Detaylar için: `producer/README.md`
 
+## 📊 Keşifsel Veri Analizi (Faz 5)
+
+Silver tablosu üzerinde kapsamlı EDA. Veri kalitesi, zaman serisi, müşteri davranışı, ürün ve coğrafi analizler.
+
+**Notebook:** `notebooks/04_eda.ipynb`
+
+### Üretilen Görseller
+
+- `docs/images/05_null_analysis.png` — Sütun bazlı doluluk (%100 dolu)
+- `docs/images/05_monthly_trend.png` — Aylık satış trendi
+- `docs/images/05_hourly_distribution.png` — Saatlik yoğunluk
+- `docs/images/05_weekday_distribution.png` — Gün bazlı dağılım
+- `docs/images/05_top_customers.png` — Top 10 müşteri
+- `docs/images/05_customer_distribution.png` — Müşteri harcama dağılımı
+- `docs/images/05_top_products.png` — Top 20 ürün
+- `docs/images/05_country_analysis.png` — Coğrafi analiz
+
+### Önemli Bulgular
+
+- **Coğrafi yoğunluk:** UK ezici çoğunluk (~%90+)
+- **Saatlik patern:** 10:00-15:00 arası en yoğun
+- **Müşteri dağılımı:** Sağa çarpık (mega müşteriler var)
+- **İptal oranı:** ~%2 (düşük)
+- **Aylık trend:** Kasım-Aralık'ta tepe (Black Friday + Christmas)
+- **Veri kalitesi:** Silver katmanında tüm sütunlar %100 dolu
+
+Bulgular Faz 6'da feature engineering'in temelini oluşturuyor.
+
 ## 📁 Proje Yapısı
 
 ```
@@ -246,7 +274,7 @@ big-data-online-retail-pipeline/
 - [x] Faz 2: Docker Altyapı
 - [x] Faz 3: Kafka Producer
 - [x] Faz 4: Spark Streaming + Delta Lake
-- [ ] Faz 5: EDA
+- [x] Faz 5: EDA
 - [ ] Faz 6: Feature Engineering
 - [ ] Faz 7: ML Modelleri + MLflow
 - [ ] Faz 8: Dashboard
