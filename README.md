@@ -261,6 +261,40 @@ Müşterinin geçmiş 18 aylık davranışından sonraki 6 ayda yapacağı harca
 python spark_jobs/gold_feature_engineering.py
 ```
 
+## 🤖 Makine Öğrenmesi Modelleri (Faz 7)
+
+5 regresyon modelini Gold tablosunda eğitir ve MLflow ile takip eder.
+
+**Notebook:** `notebooks/06_ml_models.ipynb`  
+**Script:** `ml/train_models.py`
+
+### Modeller
+
+1. **Linear Regression** — Baseline
+2. **Decision Tree Regressor** — Doğrusal olmayan
+3. **Random Forest Regressor** — Ensemble (önerilen)
+4. **Gradient Boosted Trees** — En güçlü
+5. **Generalized Linear Regression** — İstatistiksel
+
+### Metrikler
+
+- **RMSE** (Root Mean Squared Error)
+- **MAE** (Mean Absolute Error)
+- **R² Score**
+- Residual analizi (görsel)
+
+### MLflow
+
+Tüm deneyler `http://localhost:5001` adresindeki MLflow UI'da görülebilir.
+
+Experiment: `customer_lifetime_value_prediction`
+
+### Çalıştırma
+
+```bash
+python ml/train_models.py
+```
+
 ## 📁 Proje Yapısı
 
 ```
@@ -313,7 +347,7 @@ big-data-online-retail-pipeline/
 - [x] Faz 4: Spark Streaming + Delta Lake
 - [x] Faz 5: EDA
 - [x] Faz 6: Feature Engineering
-- [ ] Faz 7: ML Modelleri + MLflow
+- [x] Faz 7: ML Modelleri + MLflow
 - [ ] Faz 8: Dashboard
 - [ ] Faz 9: Dokümantasyon ve Sunum
 
