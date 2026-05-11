@@ -224,6 +224,43 @@ Silver tablosu üzerinde kapsamlı EDA. Veri kalitesi, zaman serisi, müşteri d
 
 Bulgular Faz 6'da feature engineering'in temelini oluşturuyor.
 
+## 🛠️ Feature Engineering (Faz 6)
+
+Silver tablolarından **müşteri seviyesinde** Gold feature tablosu oluşturur.
+
+**Notebook:** `notebooks/05_feature_engineering.ipynb`  
+**Script:** `spark_jobs/gold_feature_engineering.py`
+
+### Problem
+
+**Customer Lifetime Value (CLV) Tahmini** — Regresyon.  
+Müşterinin geçmiş 18 aylık davranışından sonraki 6 ayda yapacağı harcamayı tahmin et.
+
+### Üretilen Feature'lar (10 adet)
+
+| Feature | Tip | Açıklama |
+|---------|-----|----------|
+| `recency_days` | Sayısal | Son alışverişten gözlem tarihine gün |
+| `frequency` | Sayısal | Fatura sayısı |
+| `monetary` | Sayısal | Toplam harcama (£) |
+| `avg_basket_value` | Sayısal | Ortalama sepet tutarı |
+| `avg_days_between_purchases` | Sayısal | Alışverişler arası gün |
+| `unique_products` | Sayısal | Farklı ürün sayısı |
+| `cancellation_count` | Sayısal | Geçmiş iptaller |
+| `active_months` | Sayısal | Aktif ay sayısı |
+| `most_active_hour` | Sayısal | En yoğun alışveriş saati |
+| `country` | Kategorik | Ülke |
+
+### Target
+
+`future_spending` — Tahmin döneminde toplam harcama (£)
+
+### Çalıştırma
+
+```bash
+python spark_jobs/gold_feature_engineering.py
+```
+
 ## 📁 Proje Yapısı
 
 ```
@@ -275,7 +312,7 @@ big-data-online-retail-pipeline/
 - [x] Faz 3: Kafka Producer
 - [x] Faz 4: Spark Streaming + Delta Lake
 - [x] Faz 5: EDA
-- [ ] Faz 6: Feature Engineering
+- [x] Faz 6: Feature Engineering
 - [ ] Faz 7: ML Modelleri + MLflow
 - [ ] Faz 8: Dashboard
 - [ ] Faz 9: Dokümantasyon ve Sunum
