@@ -2,6 +2,8 @@
 
 End-to-end büyük veri projesi. Apache Kafka ile streaming veri üretimi, Apache Spark ile veri işleme, Delta Lake ile depolama, Spark MLlib ile makine öğrenmesi modelleri ve MLflow ile deney takibi.
 
+![Dashboard Önizleme](docs/images/08_dashboard_home.png)
+
 ## 📌 Proje Hakkında
 
 Bu proje Bilgisayar Mühendisliği "Büyük Veri Analizine Giriş" dersi 2025-2026 Bahar dönemi proje çalışmasıdır.
@@ -40,9 +42,10 @@ Bu proje Bilgisayar Mühendisliği "Büyük Veri Analizine Giriş" dersi 2025-20
 
 ## 👥 Ekip
 
-- (İsim Soyisim)
-- (İsim Soyisim)
-- (İsim Soyisim)
+- Tuna Kömür
+- Kader Kırçiçek
+- Osman Aldemir
+- Yaren Güner
 
 ## 🚀 Kurulum
 
@@ -374,7 +377,20 @@ big-data-online-retail-pipeline/
 - [x] Faz 6: Feature Engineering
 - [x] Faz 7: ML Modelleri + MLflow
 - [x] Faz 8: Dashboard
-- [ ] Faz 9: Dokümantasyon ve Sunum
+- [x] Faz 9: Dokümantasyon ve Sunum
+
+## 📄 Dokümantasyon
+
+- **Teknik Rapor:** [`docs/report/teknik_rapor.md`](docs/report/teknik_rapor.md) (veya [PDF](docs/report/teknik_rapor.pdf))
+- **Sunum Slaytları:** [`docs/report/sunum.pdf`](docs/report/sunum.pdf)
+- **Ekran Görüntüleri:** [`docs/images/`](docs/images/)
+
+### Sonuçlar (Özet)
+
+- **En İyi Model:** Linear Regression
+- **R² Score:** 0.66 (varyansın %66'sını açıklıyor)
+- **RMSE:** £1596
+- **5 Model Karşılaştırması:** Detaylar için MLflow UI veya dashboard
 
 ## 📝 Lisans
 
