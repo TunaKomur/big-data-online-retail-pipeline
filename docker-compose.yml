@@ -114,13 +114,13 @@ services:
       - "${MLFLOW_PORT}:5000"
     volumes:
       - ./mlruns:/mlruns
-      - ./mlflow-artifacts:/mlflow-artifacts
+      - ./mlflow-artifacts:/mlflow-artifacts:rw
     command: >
       mlflow server
       --host 0.0.0.0
       --port 5000
       --backend-store-uri /mlruns
-      --default-artifact-root /mlflow-artifacts
+      --default-artifact-root /mlruns/artifacts
     networks:
       - bigdata-network
 

@@ -295,6 +295,31 @@ Experiment: `customer_lifetime_value_prediction`
 python ml/train_models.py
 ```
 
+## 📈 Dashboard — Streamlit (Faz 8)
+
+İnteraktif web dashboard'u. 4 sayfa: EDA, Müşteri Analizi, Model Karşılaştırma, Tahminler.
+
+**Çalıştırma:**
+```bash
+streamlit run dashboard/app.py
+```
+
+Erişim: `http://localhost:8501`
+
+### Sayfalar
+
+1. **🏠 Ana Sayfa** — Proje özeti ve veri istatistikleri
+2. **📊 EDA** — Zaman serisi, dağılımlar, kategorik analiz
+3. **🛒 Customer Analysis** — RFM, top müşteriler, segmentasyon
+4. **🤖 Model Comparison** — 5 modelin karşılaştırması (MLflow'dan)
+5. **🎯 Predictions** — Feature importance, scatter plot, residual analizi
+
+### Görselleştirme Kütüphaneleri
+
+- **Streamlit** — UI framework
+- **Plotly** — İnteraktif grafikler (hover, zoom, filter)
+- **Pandas** — Veri manipülasyonu
+
 ## 📁 Proje Yapısı
 
 ```
@@ -348,7 +373,7 @@ big-data-online-retail-pipeline/
 - [x] Faz 5: EDA
 - [x] Faz 6: Feature Engineering
 - [x] Faz 7: ML Modelleri + MLflow
-- [ ] Faz 8: Dashboard
+- [x] Faz 8: Dashboard
 - [ ] Faz 9: Dokümantasyon ve Sunum
 
 ## 📝 Lisans
