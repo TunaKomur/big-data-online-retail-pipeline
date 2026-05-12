@@ -3,7 +3,8 @@
 ## Bilgisayar Mühendisliği — Büyük Veri Analizine Giriş
 
 **Dönem:** 2025-2026 Bahar  
-**Öğrenci:** Tuna Kömür  
+**Öğrenciler:** Tuna Kömür, Kader Kırçiçek, Osman Aldemir, Yaren Güner
+
 **Repo:** https://github.com/TunaKomur/big-data-online-retail-pipeline  
 **Tarih:** Mayıs 2026
 
@@ -84,7 +85,7 @@ Bu yaklaşım, ML literatüründe **data leakage'ı önleyen** doğru metodoloji
 
 ### 4.3 Apple Silicon Mimari Kararı
 
-İlk yaklaşımda Spark da Docker'da çalıştırılmaya çalışıldı; ancak **Apple Silicon (M2) üzerinde amd64 emülasyonu nedeniyle** Spark Session başlatma sırasında kararsız çalıştı (donmalar, geç başlama). PDF'in "yerel Spark kurulumu da kabul edilir" ifadesine dayanarak Spark host'ta (ARM64 native) çalıştırıldı. Sonuç: **15x daha hızlı session başlatma** (2.1 saniye vs 30+ saniye).
+İlk yaklaşımda Spark da Docker'da çalıştırılmaya çalışıldı; ancak **Apple Silicon (M2) üzerinde amd64 emülasyonu nedeniyle** Spark Session başlatma sırasında kararsız çalıştı (donmalar, geç başlama). Spark host'ta (ARM64 native) çalıştırıldı. Sonuç: **15x daha hızlı session başlatma** (2.1 saniye vs 30+ saniye).
 
 ### 4.4 Medallion Mimarisi (Delta Lake)
 
@@ -235,7 +236,7 @@ Erişim: `streamlit run dashboard/app.py` → http://localhost:8501
 
 ---
 
-## 10. Sonuç ve Gelecek Çalışmalar
+## 10. Sonuç
 
 ### 10.1 Başarılan Hedefler
 ✅ Uçtan uca production-grade pipeline kuruldu  
@@ -243,13 +244,6 @@ Erişim: `streamlit run dashboard/app.py` → http://localhost:8501
 ✅ 5 model MLflow ile eğitildi ve karşılaştırıldı  
 ✅ İnteraktif dashboard ile sonuçlar görselleştirildi  
 ✅ Pipeline modüler — her bileşen bağımsız çalışabiliyor
-
-### 10.2 İyileştirme Önerileri (Gelecek İçin)
-- **Tam veri seti (1M+):** GBT performansının iyileşmesi beklenir
-- **Hyperparameter tuning:** GridSearch veya BayesianSearch
-- **Daha fazla feature:** Mevsimsellik, kampanya etkisi, web log verileri
-- **Real-time prediction servisi:** Model REST API olarak deploy edilebilir
-- **A/B testing:** Modelin iş etkisini ölçmek için
 
 ---
 
